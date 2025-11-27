@@ -107,17 +107,30 @@ section h3 {
 
 /* Custom bullet (small colored dot) */
 .activity-card .participants-list li::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  background: linear-gradient(135deg,#3949ab,#1a237e);
-  border-radius: 50%;
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  /* hide the decorative dot; we use avatar and a delete icon instead */
+  display: none;
 }
+
+/* Participant delete button */
+.activity-card .participant-delete {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: #c62828;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.activity-card .participant-delete:hover {
+  background-color: rgba(198,40,40,0.08);
+  color: #b71c1c;
+}
+
+/* Layout: ensure participant row lays out avatar, name, and delete button */
+/* (layout for participant rows is defined earlier) */
 
 /* Optional small avatar circle for initials or image */
 .activity-card .participant-avatar {

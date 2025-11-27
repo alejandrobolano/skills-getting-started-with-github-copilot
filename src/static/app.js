@@ -75,8 +75,40 @@ document.addEventListener("DOMContentLoaded", () => {
             nameSpan.className = 'participant-name';
             nameSpan.textContent = p;
 
+            // Delete button
+            const del = document.createElement('button');
+            del.type = 'button';
+            del.className = 'participant-delete';
+            del.title = 'Remove participant';
+            del.innerHTML = '✕';
+            del.addEventListener('click', async (ev) => {
+              ev.stopPropagation();
+              if (!confirm(`Remove ${p} from ${name}?`)) return;
+              try {
+                const res = await fetch(`/activities/${encodeURIComponent(name)}/signup?email=${encodeURIComponent(p)}`, { method: 'DELETE' });
+                const body = await res.json();
+                if (res.ok) {
+                  messageDiv.textContent = body.message || 'Removed participant';
+                  messageDiv.className = 'success';
+                  messageDiv.classList.remove('hidden');
+                  setTimeout(() => messageDiv.classList.add('hidden'), 4000);
+                  fetchActivities();
+                } else {
+                  messageDiv.textContent = body.detail || 'Failed to remove participant';
+                  messageDiv.className = 'error';
+                  messageDiv.classList.remove('hidden');
+                }
+              } catch (err) {
+                messageDiv.textContent = 'Network error removing participant';
+                messageDiv.className = 'error';
+                messageDiv.classList.remove('hidden');
+                console.error(err);
+              }
+            });
+
             li.appendChild(avatar);
             li.appendChild(nameSpan);
+            li.appendChild(del);
             ul.appendChild(li);
           });
 

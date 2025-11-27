@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function to fetch activities from API
   async function fetchActivities() {
     try {
-      const response = await fetch("/activities");
+      // avoid any caching so we always get the latest participants
+      const response = await fetch("/activities", { cache: 'no-store' });
       const activities = await response.json();
 
       // Clear loading message and activity select (keep placeholder)
@@ -15,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Reset activity dropdown but preserve the first placeholder option if present
       const placeholder = activitySelect.querySelector('option[value=""]');
       activitySelect.innerHTML = "";
-      if (placeholder) activitySelect.appendChild(placeholder);
+      if (placeholder) activitySelect.appendChild(placeholder.cloneNode(true));
 
       // Populate activities list
       Object.entries(activities).forEach(([name, details]) => {
@@ -154,11 +155,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const result = await response.json();
 
       if (response.ok) {
+        console.log('Signup successful:', result);
         messageDiv.textContent = result.message;
         messageDiv.className = "success";
         signupForm.reset();
-        // Refresh activities list to show updated participants
-        fetchActivities();
+        // Refresh activities list to show updated participants and wait for it to finish
+        await fetchActivities();
       } else {
         messageDiv.textContent = result.detail || "An error occurred";
         messageDiv.className = "error";

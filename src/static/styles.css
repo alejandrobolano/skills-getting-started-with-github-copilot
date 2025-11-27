@@ -74,6 +74,98 @@ section h3 {
   margin-bottom: 8px;
 }
 
+/* Participants section inside activity cards */
+.activity-card .participants-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a237e;
+  margin-top: 10px;
+  margin-bottom: 8px;
+}
+
+/* Make the participants list appear as a neat bulleted list with custom dots */
+.activity-card .participants-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Each participant row */
+.activity-card .participants-list li {
+  position: relative;
+  padding-left: 36px; /* space for custom bullet + avatar */
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+  font-size: 14px;
+}
+
+/* Custom bullet (small colored dot) */
+.activity-card .participants-list li::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(135deg,#3949ab,#1a237e);
+  border-radius: 50%;
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+
+/* Optional small avatar circle for initials or image */
+.activity-card .participant-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#e8eaf6,#c5cae9);
+  color: #1a237e;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex: 0 0 28px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+/* Participant name text */
+.activity-card .participant-name {
+  color: #2b2b2b;
+  line-height: 1;
+}
+
+/* Small helper text when no participants yet */
+.activity-card .no-participants {
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #fff8e1;
+  color: #8a6d00;
+  font-size: 13px;
+  border: 1px solid #ffecb3;
+}
+
+/* Slight hover accent for participant rows */
+.activity-card .participants-list li:hover {
+  background-color: rgba(26,35,126,0.03);
+  border-radius: 4px;
+}
+
+/* Ensure good spacing on small screens */
+@media (max-width: 480px) {
+  .activity-card .participants-list li {
+    padding-left: 32px;
+    gap: 8px;
+  }
+}
+
 .form-group {
   margin-bottom: 15px;
 }

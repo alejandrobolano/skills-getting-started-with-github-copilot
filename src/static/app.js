@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // avoid any caching so we always get the latest participants
       const response = await fetch("/activities", { cache: 'no-store' });
       const activities = await response.json();
+      console.log('fetched activities', activities);
 
       // Clear loading message and activity select (keep placeholder)
       activitiesList.innerHTML = "";
@@ -22,6 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
       Object.entries(activities).forEach(([name, details]) => {
         const activityCard = document.createElement("div");
         activityCard.className = "activity-card";
+        // mark card with activity name to allow targeted updates
+        activityCard.dataset.activity = name;
 
         const spotsLeft = details.max_participants - details.participants.length;
 
@@ -131,6 +134,9 @@ document.addEventListener("DOMContentLoaded", () => {
         option.textContent = name;
         activitySelect.appendChild(option);
       });
+
+      // return activities for callers that await this function
+      return activities;
     } catch (error) {
       activitiesList.innerHTML = "<p>Failed to load activities. Please try again later.</p>";
       console.error("Error fetching activities:", error);
